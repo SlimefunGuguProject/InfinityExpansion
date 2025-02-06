@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 
+import lombok.Getter;
 import lombok.Setter;
 
 import org.bukkit.Bukkit;
@@ -72,10 +73,13 @@ public final class StorageCache {
     /* Instance Variables */
     private final String[] signDisplay = new String[2];
     private String displayName;
+    @Getter
     private Material material;
+    @Getter
     private ItemMeta meta;
     private boolean voidExcess;
     @Setter
+    @Getter
     private int amount;
 
     StorageCache(StorageUnit storageUnit, BlockMenu menu) {
@@ -407,7 +411,7 @@ public final class StorageCache {
                 && sign.getRelative(((WallSign) sign.getBlockData()).getFacing().getOppositeFace()).equals(block);
     }
 
-    private void setStored(ItemStack input) {
+    public void setStored(ItemStack input) {
         this.meta = input.hasItemMeta() ? input.getItemMeta() : null;
         setDisplayName(ItemStackHelper.getDisplayName(input));
         this.material = input.getType();
@@ -421,7 +425,7 @@ public final class StorageCache {
         this.menu.replaceExistingItem(DISPLAY_SLOT, input);
     }
 
-    private void setEmpty() {
+    public void setEmpty() {
         setEmptyDisplayName();
         this.meta = null;
         this.material = null;
@@ -429,7 +433,7 @@ public final class StorageCache {
         this.amount = 0;
     }
 
-    boolean matches(ItemStack item) {
+    public boolean matches(ItemStack item) {
         return item.getType() == this.material
                 && item.hasItemMeta() == (this.meta != null)
                 && (this.meta == null || this.meta.equals(item.getItemMeta()));
