@@ -2,6 +2,7 @@ package io.github.mooy1.infinityexpansion.items.storage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
@@ -118,6 +119,9 @@ public final class StorageCache {
                     // load the item in menu
                     load(display, copy);
                 }
+            }else{
+                //if display item lost, reset amount record
+                setEmpty();
             }
         }
 
@@ -172,6 +176,14 @@ public final class StorageCache {
 
         // load status slot
         updateStatus();
+    }
+
+    private ItemStack generateRandomDisplayItem(ItemStack input){
+        ItemMeta meta = input.getItemMeta();
+        meta.getPersistentDataContainer().set(DISPLAY_KEY, PersistentDataType.INTEGER, ThreadLocalRandom.current().nextInt());
+        var display = new ItemStack(input.getType());
+        display.setItemMeta(meta);
+        return display;
     }
 
     private void setDisplayName(String name) {
@@ -260,7 +272,11 @@ public final class StorageCache {
 
         ItemStack drop = this.storageUnit.getItem().clone();
         ItemStack displayItem = this.menu.getItemInSlot(DISPLAY_SLOT);
-        if (displayItem == null || displayItem.getType().isAir()) {
+        if( displayItem == null || displayItem.getType().isAir()){
+            displayItem = new ItemStack(this.material).clone();
+            displayItem.setItemMeta(this.meta);
+        }
+        if ( displayItem.getType().isAir()) {
             e.getPlayer().sendMessage(ChatColor.RED + "物品丢失，无法恢复");
         } else {
             drop.setItemMeta(StorageUnit.saveToStack(drop.getItemMeta(), this.menu.getItemInSlot(DISPLAY_SLOT), this.displayName, this.amount));
@@ -280,7 +296,7 @@ public final class StorageCache {
     }
 
     void load(ItemStack stored, ItemMeta copy) {
-        this.menu.replaceExistingItem(DISPLAY_SLOT, stored);
+        this.menu.replaceExistingItem(DISPLAY_SLOT, generateRandomDisplayItem(stored));
 
         // remove the display key from copy
         copy.getPersistentDataContainer().remove(DISPLAY_KEY);
@@ -404,6 +420,11 @@ public final class StorageCache {
             lore.add(ChatColor.GRAY + "(点击切换)");
             meta.setLore(lore);
         }), false);
+        if(this.isEmpty()){
+            this.menu.replaceExistingItem(DISPLAY_SLOT, EMPTY_ITEM);
+        }else {
+            this.menu.replaceExistingItem(DISPLAY_SLOT, generateRandomDisplayItem(createItem(1)));
+        }
     }
 
     private static boolean checkWallSign(Block sign, Block block) {
@@ -417,12 +438,12 @@ public final class StorageCache {
         this.material = input.getType();
 
         // add the display key to the display input and set amount 1
-        ItemMeta meta = input.getItemMeta();
-        meta.getPersistentDataContainer().set(DISPLAY_KEY, PersistentDataType.BYTE, (byte) 1);
-        input.setItemMeta(meta);
-        input.setAmount(1);
+//        ItemMeta meta = input.getItemMeta();
+//        meta.getPersistentDataContainer().set(DISPLAY_KEY, PersistentDataType.BYTE, (byte) 1);
+//        input.setItemMeta(meta);
+//        input.setAmount(1);
 
-        this.menu.replaceExistingItem(DISPLAY_SLOT, input);
+        this.menu.replaceExistingItem(DISPLAY_SLOT, generateRandomDisplayItem(input));
     }
 
     public void setEmpty() {

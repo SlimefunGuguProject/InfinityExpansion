@@ -15,6 +15,7 @@ import lombok.experimental.UtilityClass;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Waterlogged;
@@ -25,9 +26,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import io.github.mooy1.infinityexpansion.InfinityExpansion;
 
+import org.bukkit.persistence.PersistentDataType;
+
 @UtilityClass
 public final class Util {
-
+    static final NamespacedKey DISPLAY_KEY = InfinityExpansion.createKey("display-only");
     @Nonnull
     public static ItemStack getDisplayItem(@Nonnull ItemStack output) {
         ItemMeta meta = output.getItemMeta();
@@ -42,6 +45,8 @@ public final class Util {
         lore.add(ChatColor.GREEN + "-------------------");
         lore.add(ChatColor.GREEN + "\u21E8 点击合成");
         lore.add(ChatColor.GREEN + "-------------------");
+        meta.setLore(lore);
+        meta.getPersistentDataContainer().set(DISPLAY_KEY, PersistentDataType.BYTE,(byte)1);
         output.setItemMeta(meta);
         return output;
     }

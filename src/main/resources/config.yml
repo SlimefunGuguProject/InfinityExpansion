@@ -35,7 +35,10 @@ quarry-options:
     redstone: .5
     quartz: .5
     emerald: .5
-
+  #额外生产加速器
+  extra-oscillators:
+    #以材料大写id为key，不可以与上面的相同
+    SAMPLE_MATERIAL: .5
   # 每隔多少粘液刻输出产物
     #  # 在没有更改 Slimefun 设置的情况下，1 粘液刻 = 0.5 秒
   ticks-per-output: 10
@@ -58,7 +61,7 @@ quarry-options:
     redstone: true
     netherite: true
     netherrack: true
-  
+
 # 设置高级铁砧的附魔等级上限
 advanced-anvil-max-levels:
   sharpness: 9

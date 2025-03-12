@@ -76,6 +76,9 @@ public final class Quarries {
     private static double getOscillatorChance(String type) {
         return InfinityExpansion.config().getDouble("quarry-options.oscillators." + type, 0, 1);
     }
+    private static double getCustomOscillatorChance(String type){
+        return InfinityExpansion.config().getDouble("quarry-options.extra-oscillators." + type, 0, 1);
+    }
 
     public static void setup(InfinityExpansion plugin) {
         ConfigurationSection section = plugin.getConfig().getConfigurationSection("quarry-options.resources");
@@ -103,24 +106,27 @@ public final class Quarries {
         }
 
         if (section.getBoolean("redstone")) {
-            new Oscillator(REDSTONE_OSCILLATOR, REDSTONE_CHANCE).register(plugin);
             outputs.add(Material.REDSTONE);
         }
+        new Oscillator(REDSTONE_OSCILLATOR, REDSTONE_CHANCE).register(plugin);
+
 
         if (section.getBoolean("lapis")) {
-            new Oscillator(LAPIS_OSCILLATOR, LAPIS_CHANCE).register(plugin);
             outputs.add(Material.LAPIS_LAZULI);
         }
+        new Oscillator(LAPIS_OSCILLATOR, LAPIS_CHANCE).register(plugin);
 
         if (section.getBoolean("emerald")) {
-            new Oscillator(EMERALD_OSCILLATOR, EMERALD_CHANCE).register(plugin);
             outputs.add(Material.EMERALD);
         }
+        new Oscillator(EMERALD_OSCILLATOR, EMERALD_CHANCE).register(plugin);
+
 
         if (section.getBoolean("diamond")) {
-            new Oscillator(DIAMOND_OSCILLATOR, DIAMOND_CHANCE).register(plugin);
             outputs.add(Material.DIAMOND);
         }
+        new Oscillator(DIAMOND_OSCILLATOR, DIAMOND_CHANCE).register(plugin);
+
 
         new Quarry(Groups.ADVANCED_MACHINES, BASIC_QUARRY, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 Materials.MAGSTEEL_PLATE, SlimefunItems.CARBONADO_EDGED_CAPACITOR, Materials.MAGSTEEL_PLATE,
@@ -129,10 +135,10 @@ public final class Quarries {
         }, 1, 6, outputs.toArray(new Material[0])).energyPerTick(300).register(plugin);
 
         if (section.getBoolean("quartz")) {
-            new Oscillator(QUARTZ_OSCILLATOR, QUARTZ_CHANCE).register(plugin);
-
             outputs.add(Material.QUARTZ);
         }
+        new Oscillator(QUARTZ_OSCILLATOR, QUARTZ_CHANCE).register(plugin);
+
 
         if (section.getBoolean("netherite")) {
             outputs.add(Material.NETHERITE_INGOT);
@@ -171,6 +177,20 @@ public final class Quarries {
                 Materials.VOID_INGOT, null, Materials.INFINITE_INGOT, Materials.INFINITE_INGOT, null, Materials.VOID_INGOT,
                 Materials.VOID_INGOT, null, Materials.INFINITE_INGOT, Materials.INFINITE_INGOT, null, Materials.VOID_INGOT
         }, 64, 1, outputs.toArray(new Material[0])).energyPerTick(36000).register(plugin);
+
+
+        var extraOscillators =  InfinityExpansion.config()  .getConfigurationSection("quarry-options.extra-oscillators");
+        if(extraOscillators != null) {
+            for (String material: extraOscillators.getKeys(false)) {
+                Material extraMaterial = Material.getMaterial(material);
+                if(extraMaterial != null) {
+                    new Oscillator(Oscillator.create(extraMaterial, getCustomOscillatorChance(material)), getCustomOscillatorChance(material))
+                        .register(plugin);
+                }
+            }
+        }
+
+
     }
 
 }
