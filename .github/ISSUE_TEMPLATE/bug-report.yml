@@ -1,5 +1,5 @@
 name: Bug汇报
-description: 反馈本插件的Bug或问题，仅限中文
+description: 反馈本插件的Bug或问题
 labels: ["bug"]
 assignees:
   - ybw0014
@@ -7,8 +7,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## 欢迎来到 SlimefunGuguProject Bug 追踪器
-        你正在反馈 InfinityExpansion 汉化版 的 Bug。
+        ## 欢迎来到 SlimefunGuguProject 的问题追踪器
+        你正在反馈 InfinityExpansion（无尽贪婪）汉化版出现的 Bug。
+        任何意见，建议请前往[QQ群](https://50l.cc/sf-qg)进行反馈。
         建议先阅读[这篇文章](https://slimefun-wiki.guizhanss.cn/How-to-report-bugs)了解如何正确地汇报Bug。
 
         <strong><i>你必须填写标注为星号（*）的表单项</i></strong>
@@ -19,13 +20,11 @@ body:
       label: 检查项目
       description: 在汇报之前，你需要确认
       options:
-        - label: 你使用的是从构建站下载的版本 (https://builds.guizhanss.net)
+        - label: 你使用的是从资源站下载的版本 (https://resources.guizhanss.com)
           required: true
-        - label: 你已经检验过下载的文件的校验和，确认已完整下载文件 (暂未推出)
-          required: false
+        - label: 你已经检验过下载的文件的校验和，确认已完整下载文件
+          required: true
         - label: 你没有对下载的文件内容进行任何更改
-          required: true
-        - label: 你没有安装`CS-CoreLib`
           required: true
         - label: 你已经寻找过[已知问题列表](https://github.com/SlimefunGuguProject/InfinityExpansion/issues)，且没有找到相同的问题
           required: true
@@ -69,9 +68,9 @@ body:
     attributes:
       label: 服务器日志
       description: |
-        请查看服务器日志中是否包含任何报错，如果有请上传至 [https://paste.guizhanss.net/](https://paste.guizhanss.net/) 并在此填入链接。
+        请查看服务器日志中是否包含任何报错，如果有请上传至 [https://mclo.gs](https://mclo.gs) 并在此填入链接。
         **不要直接在这里粘贴日志**
-      placeholder: https://paste.guizhanss.net/...
+      placeholder: https://mclo.gs/...
     validations:
       required: false
 
@@ -81,69 +80,21 @@ body:
       label: 错误报告
       description: |
         如果服务器日志中提到了`/plugins/Slimefun/error-reports`中的文件（即错误报告）
-        请上传至 [https://paste.guizhanss.net/](https://paste.guizhanss.net/) 并在此填入链接。
+        请上传至 [https://mclo.gs](https://mclo.gs) 并在此填入链接。
         **不要直接在这里粘贴错误报告**
-      placeholder: https://paste.guizhanss.net/...
+      placeholder: https://mclo.gs/...
     validations:
       required: false
 
-  - type: dropdown
-    id: server-software
-    attributes:
-      label: 服务端软件
-      description: 请选择你服务端所使用的软件
-      options:
-        - Spigot
-        - Paper
-        - Purpur
-        - Airplane
-        - 其他 (请在问题描述里写明)
-    validations:
-      required: true
-
-  - type: dropdown
-    id: minecraft-version
-    attributes:
-      label: Minecraft 版本
-      description: 请选择你的 Minecraft 版本
-      options:
-        - 1.19.x
-        - 1.18.x
-        - 1.17.x
-        - 1.16.x
-        - 本插件不支持旧版本
-    validations:
-      required: true
-
-  - type: checkboxes
-    id: cscorelib-version
-    attributes:
-      label: CS-CoreLib 版本
-      description: |
-        从2021年1月30日起，Slimefun以及其附属插件都不再需要安装CS-CoreLib。
-        保留CS-CoreLib可能导致一些未知的问题。
-      options:
-        - label: 我没有安装CS-CoreLib
-          required: true
-
   - type: textarea
-    id: slimefun-version
+    id: environment
     attributes:
-      label: Slimefun版本
+      label: 环境信息
       description: |
-        请填写Slimefun版本
-        (例如 v4.9-canary-08120db)
-        如果你有管理员权限，建议运行`/sf versions`指令，截图并在此上传指令输出的**所有内容**。
-    validations:
-      required: true
-
-  - type: input
-    id: version-plugin
-    attributes:
-      label: 插件版本
-      description: |
-        请填写插件版本
-        只需填写Build后面的数字版本即可
-        (`Build 7 zh-CN(ybw0014) (git 9ef7fee)`只需填写`7`即可)
+        请在游戏内运行 `/sf versions`，并把指令的**完整输出**截图或粘贴到此处。
+        如果该命令无法运行，请手动提供服务端软件、服务端Minecraft版本、Slimefun版本、本插件版本与插件列表。
+        如果服务端的Minecraft版本与连接服务器所用客户端的Minecraft版本不一致，请一并说明。
+      placeholder: |
+        （在这里粘贴 /sf versions 的完整输出，或手动填写）
     validations:
       required: true

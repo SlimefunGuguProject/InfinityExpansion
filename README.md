@@ -4,17 +4,7 @@
 
 ## 下载
 
-点击这里下载 InfinityExpansion: [下载 InfinityExpansion](https://builds.guizhanss.net/SlimefunGuguProject/InfinityExpansion/master)
-
-<p align="center">
-  <a href="https://github.com/SlimefunGuguProject/InfinityExpansion/actions/workflows/maven.yml">
-    <img src="https://github.com/SlimefunGuguProject/InfinityExpansion/actions/workflows/maven.yml/badge.svg" alt="Java CI"/>
-  </a>
-
-  <a href="https://builds.guizhanss.net/SlimefunGuguProject/InfinityExpansion/master">
-    <img src="https://builds.guizhanss.net/f/SlimefunGuguProject/InfinityExpansion/master/badge.svg" alt="Build status"/>
-  </a>
-</p>
+[下载 InfinityExpansion](https://resources.guizhanss.com/plugin/InfinityExpansion)
 
 ## Bug/建议
 
